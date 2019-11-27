@@ -1,21 +1,23 @@
 from bluepy.bluepy import btle
+import bleconnection as bt
 import time
 
-service_uuid = btle.UUID("4fafc201-1fb5-459e-8fcc-c5c9c331914b") #Remote service UUID
-characteristic_uuid = btle.UUID("beb5483e-36e1-4688-b7f5-ea07361b26a8") #Remote characteristic UUID
-
-esp32_per = btle.Peripheral("80:7D:3A:A3:D9:AA") #Set a peripheral that will be connected by MAC Address
+ble = bt.BLE_Connection()
 
 try:
+    ble.connect()
     print("Success")
-    services = esp32_per.getServices()
-    serv = esp32_per.getServiceByUUID(service_uuid)
-    charac = serv.getCharacteristics(characteristic_uuid)[0]
-    if (charac.supportsRead()):
+    ble.get_service()
+    temp_humid = ble.get_characteristics(ble.temp_hummid_uuid)
+    lightmeter = ble.get_characteristics(ble.lightmeter_uuid)
+    pir = ble.get_characteristics(ble.pir_char_uuid)
+    ldr = ble.get_characteristics(ble.ldr_char_uuid)
+
+    if (temp_humid.supportsRead()):
         while True:
-            in_ch = charac.read()  
+            in_ch = temp_humid.read()  
             print str(in_ch)
-            charac.write("y",True)
+            temp_humid.write("y",True)
             time.sleep(2000)      
 except Exception as error:
     print(error)
