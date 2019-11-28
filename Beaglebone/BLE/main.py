@@ -8,16 +8,25 @@ try:
     ble.connect()
     print("Success")
     ble.get_service()
-    temp_humid = ble.get_characteristics(ble.temp_hummid_uuid)
+    temp = ble.get_characteristics(ble.temp_uuid)
+    hummid = ble.get_characteristics(ble.hummid_uuid)
     lightmeter = ble.get_characteristics(ble.lightmeter_uuid)
     pir = ble.get_characteristics(ble.pir_char_uuid)
     ldr = ble.get_characteristics(ble.ldr_char_uuid)
 
     while True:
-        if (temp_humid.supportsRead()):
-            in_ch = temp_humid.read()  
+        if (temp.supportsRead()):
+            in_ch = temp.read()  
             print str(in_ch)
-            temp_humid.write("A",True)
+            temp.write("A",True)
+            time.sleep(1)
+        else:
+            break
+
+        if (hummid.supportsRead()):
+            in_ch = hummid.read()  
+            print str(in_ch)
+            hummid.write("A",True)
             time.sleep(1)
         else:
             break

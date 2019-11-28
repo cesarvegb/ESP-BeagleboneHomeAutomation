@@ -7,7 +7,8 @@ class BLE_Connection:
         def __init__(self):
             self.addr = DEV_ADDR
             self.serv_uuid = btle.UUID(SERVICE_UUID)         # Remote service UUID
-            self.temp_hummid_uuid = btle.UUID(TEMP_HUM_UUID) # Remote characteristic UUID
+            self.temp_uuid = btle.UUID(TEMP_UUID)            # Remote characteristic UUID
+            self.hummid_uuid = btle.UUID(HUM_UUID)
             self.lightmeter_uuid = btle.UUID(LIGHT_UUID)     # Lightmeter characteristic UUID
             self.pir_char_uuid = btle.UUID(PIR_UUID)         # PIR characteristic UUID
             self.ldr_char_uuid = btle.UUID(LDR_UUID)         # LDR characteristic UUID
